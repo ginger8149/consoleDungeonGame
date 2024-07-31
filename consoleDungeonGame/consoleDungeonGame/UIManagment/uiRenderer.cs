@@ -13,7 +13,13 @@ namespace consoleDungeonGame.UIManagment
         internal int MaxHeight { get; set; }
         internal int MaxWidth { get; set; }
 
-        
+
+
+        //Minimap window render pos infomation
+        internal int MiniMapPosX { get; set; }
+        internal int MiniMapPosY { get; set; }
+        internal int MiniMapWidth { get; set; }
+        internal int MiniMapHeight { get; set; }
 
 
         public void reRenderGameScreen()
@@ -62,10 +68,26 @@ namespace consoleDungeonGame.UIManagment
 
 
             // devide screen and store area 
+            MiniMapWidth = MaxWidth / 4;
+            MiniMapHeight = MaxHeight / 4;
+
+            MiniMapPosX = MaxWidth - MiniMapWidth;
+            MiniMapPosY = MaxHeight - MiniMapHeight;
+
+            //draw deviding bar
+            Console.SetCursorPosition(MiniMapPosX, 0);
+            Console.Write('\u2533');
+            for (int i = 1; i < (MaxHeight-1); i++)
+            {
+                Console.SetCursorPosition(MiniMapPosX, i);
+                Console.Write('\u2503');
+            }
+            Console.SetCursorPosition(MiniMapPosX, MaxHeight-1);
+            Console.Write('\u253B');
 
 
 
-
+            Console.SetCursorPosition(0,MaxHeight);
         }
         public void renderDungeonRoom() 
         {
