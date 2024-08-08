@@ -87,7 +87,7 @@ namespace consoleDungeonGame.UIManagment
 
 
 
-            Console.SetCursorPosition(0,MaxHeight);
+            Console.SetCursorPosition(MaxWidth -1,MaxHeight-1);
         }
         public void renderDungeonRoom() 
         {

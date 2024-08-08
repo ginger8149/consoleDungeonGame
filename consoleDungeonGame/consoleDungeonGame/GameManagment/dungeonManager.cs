@@ -1,8 +1,10 @@
-﻿using System;
+﻿using consoleDungeonGame.GameManagment.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace consoleDungeonGame.GameManagment
 {
@@ -19,9 +21,11 @@ namespace consoleDungeonGame.GameManagment
 
         public void saveDungeonToDisk() { }
 
-        public void generateNewDungeon(int difficulty)
+        public dungeon generateNewDungeon(int difficulty)
         {
 
+            Random rand = new Random();
+            int numOfRoomsToExit = rand.Next(3,6) * difficulty;
 
 
 
