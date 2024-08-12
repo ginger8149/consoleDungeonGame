@@ -1,4 +1,6 @@
-﻿using consoleDungeonGame.GameManagment.models;
+﻿using consoleDungeonGame.GameManagment.intefaces;
+using consoleDungeonGame.GameManagment.models;
+using consoleDungeonGame.GameManagment.models.rooms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +16,7 @@ namespace consoleDungeonGame.GameManagment
 
         public dungeonManager() { }
 
-        public void loadDungeonFromSave()
-        {
-
-        }
+        public void loadDungeonFromSave() { }
 
         public void saveDungeonToDisk() { }
 
@@ -25,12 +24,22 @@ namespace consoleDungeonGame.GameManagment
         {
 
             Random rand = new Random();
-            int numOfRoomsToExit = rand.Next(3,6) * difficulty;
+            int RoomsToExit = rand.Next(3,6) * difficulty;
+
+
+            List<IRoom> rooms = new List<IRoom>();
 
 
 
 
 
+
+
+
+
+            
+
+            return new dungeon();
         }
 
     }

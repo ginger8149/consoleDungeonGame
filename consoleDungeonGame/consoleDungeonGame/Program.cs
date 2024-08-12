@@ -1,4 +1,5 @@
-﻿using consoleDungeonGame.UIManagment;
+﻿using consoleDungeonGame.GameManagment;
+using consoleDungeonGame.UIManagment;
 
 namespace consoleDungeonGame
 {
@@ -6,9 +7,16 @@ namespace consoleDungeonGame
     {
         static void Main(string[] args)
         {
-            uiRenderer Renderer = new uiRenderer();
 
-            Renderer.reRenderGameScreen();
+            dungeonManager dungeonManager = new dungeonManager();
+
+            dungeonManager.generateNewDungeon(2);
+
+
+
+            //uiRenderer Renderer = new uiRenderer();
+
+            //Renderer.reRenderGameScreen();
         }
     }
 }
