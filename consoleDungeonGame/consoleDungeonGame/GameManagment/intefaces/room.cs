@@ -17,10 +17,10 @@ namespace consoleDungeonGame.GameManagment.intefaces
         int roomPosY { get; }
 
         // id 0 to be used if not conected
-        Guid roomNorth { get; }
-        Guid roomSouth { get; }
-        Guid roomEast { get; }
-        Guid roomWest { get; }
+        Guid? roomNorth { get; }
+        Guid? roomSouth { get; }
+        Guid? roomEast { get; }
+        Guid? roomWest { get; }
 
 
         //TODO: add requred render information
