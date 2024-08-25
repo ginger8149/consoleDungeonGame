@@ -36,69 +36,44 @@ namespace consoleDungeonGame.GameManagment.models.rooms
         {
             //find place to attach new room if not throw exseption
             // start check by looking at what sides dont have ids then check empty directions posx,y for non atached rooms.
+            List<KeyValuePair<string, bool>> validSides = [
 
-            List<bool> validDirections = [true, true, true, true]; // n,s,e,w
-            if (roomNorth.HasValue)
-                validDirections[0] = false;
-            else
-            {
-                foreach (IRoom room in currentMap)
-                {
-                    if((roomPosX == room.roomPosX) && (roomPosY +1 == roomPosY))
-                        validDirections[0] = false;
-                }
-            }
+                new KeyValuePair<string, bool>("North", !roomNorth.HasValue && currentMap.Exists(c => c.roomPosY == roomPosY + 1 && c.roomPosX == roomPosX) ),
+                new KeyValuePair<string, bool>("South", !roomSouth.HasValue && currentMap.Exists(c => c.roomPosY == roomPosY - 1 && c.roomPosX == roomPosX)),
+                new KeyValuePair<string, bool>("East", !roomEast.HasValue && currentMap.Exists(c => c.roomPosY == roomPosY && c.roomPosX == roomPosX + 1)),
+                new KeyValuePair<string, bool>("West", !roomWest.HasValue && currentMap.Exists(c => c.roomPosY == roomPosY && c.roomPosX == roomPosX - 1))
+            ];
 
-            if (roomSouth.HasValue)
-                validDirections[1] = false;
-            else
-            {
-                foreach (IRoom room in currentMap)
-                {
-                    if ((roomPosX == room.roomPosX) && (roomPosY + 1 == roomPosY))
-                        validDirections[0] = false;
-                }
-            }
+            var valid = validSides.FindAll(C => C.Value);
+            string pickedDirection = valid[random.Next(valid.Count)].Key;
 
-            if (roomEast.HasValue)
-                validDirections[2] = false;
-            else
-            {
-                foreach (IRoom room in currentMap)
-                {
-                    if ((roomPosX == room.roomPosX) && (roomPosY + 1 == roomPosY))
-                        validDirections[0] = false;
-                }
-            }
+            int newRoomPosX = roomPosX;
+            int newRoomPosY = roomPosY;
 
-            if (roomWest.HasValue)
-                validDirections[3] = false;
-            else
-            {
-                foreach (IRoom room in currentMap)
-                {
-                    if ((roomPosX == room.roomPosX) && (roomPosY + 1 == roomPosY))
-                        validDirections[0] = false;
-                }
-            }
-
-            // pick a side any side
-            int sidePicked = random.Next(0,validDirections.Count(c => c));
-            
-
-
-
-
-
-
+            if (pickedDirection == "North")
+                newRoomPosX = roomPosX + 1;
+            if (pickedDirection == "South")
+                newRoomPosX = roomPosX - 1;
+            if (pickedDirection == "East")
+                newRoomPosY = roomPosY + 1;
+            if (pickedDirection == "West")
+                newRoomPosY = roomPosY - 1;
 
             //list of all posible rooms //todo: add exitRoomGeneration and waghting to room types 
             List<IRoom> roomTypes = [
-                new basicRoom(),//add random name gen
+                new basicRoom(roomPosX,roomPosY),//add random name gen
             ];
             IRoom newRoom = roomTypes[random.Next(1, roomTypes.Count())];
 
-
+            if (pickedDirection == "North")
+                roomNorth = newRoom.roomID;
+            if (pickedDirection == "South")
+                roomSouth = newRoom.roomID;
+            if (pickedDirection == "East")
+                roomEast = newRoom.roomID;
+            if (pickedDirection == "West")
+                roomWest = newRoom.roomID;
+            
             return newRoom; 
 
 
