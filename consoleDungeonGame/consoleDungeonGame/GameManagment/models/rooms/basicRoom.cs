@@ -24,7 +24,7 @@ namespace consoleDungeonGame.GameManagment.models.rooms
         Random random = new Random();
         public basicRoom( int x , int y) 
         {
-            roomID = new Guid();
+            roomID = Guid.NewGuid();
             roomName = "test:" + x +" "+ y;
             
             roomPosX = x;
@@ -38,13 +38,13 @@ namespace consoleDungeonGame.GameManagment.models.rooms
             // start check by looking at what sides dont have ids then check empty directions posx,y for non atached rooms.
             List<KeyValuePair<string, bool>> validSides = [
 
-                new KeyValuePair<string, bool>("North", !roomNorth.HasValue && currentMap.Exists(c => c.roomPosY == roomPosY + 1 && c.roomPosX == roomPosX) ),
-                new KeyValuePair<string, bool>("South", !roomSouth.HasValue && currentMap.Exists(c => c.roomPosY == roomPosY - 1 && c.roomPosX == roomPosX)),
-                new KeyValuePair<string, bool>("East", !roomEast.HasValue && currentMap.Exists(c => c.roomPosY == roomPosY && c.roomPosX == roomPosX + 1)),
-                new KeyValuePair<string, bool>("West", !roomWest.HasValue && currentMap.Exists(c => c.roomPosY == roomPosY && c.roomPosX == roomPosX - 1))
+                new KeyValuePair<string, bool>("North", !roomNorth.HasValue && !currentMap.Exists(c => c.roomPosY == roomPosY + 1 && c.roomPosX == roomPosX) ),
+                new KeyValuePair<string, bool>("South", !roomSouth.HasValue && !currentMap.Exists(c => c.roomPosY == roomPosY - 1 && c.roomPosX == roomPosX)),
+                new KeyValuePair<string, bool>("East", !roomEast.HasValue && !currentMap.Exists(c => c.roomPosY == roomPosY && c.roomPosX == roomPosX + 1)),
+                new KeyValuePair<string, bool>("West", !roomWest.HasValue && !currentMap.Exists(c => c.roomPosY == roomPosY && c.roomPosX == roomPosX - 1))
             ];
 
-            var valid = validSides.FindAll(C => C.Value);
+            var valid = validSides.FindAll(C => C.Value);// add throw if all options false
             string pickedDirection = valid[random.Next(valid.Count)].Key;
 
             int newRoomPosX = roomPosX;
@@ -61,18 +61,30 @@ namespace consoleDungeonGame.GameManagment.models.rooms
 
             //list of all posible rooms //todo: add exitRoomGeneration and waghting to room types 
             List<IRoom> roomTypes = [
-                new basicRoom(roomPosX,roomPosY),//add random name gen
+                new basicRoom(newRoomPosX,newRoomPosY),//add random name gen
             ];
-            IRoom newRoom = roomTypes[random.Next(1, roomTypes.Count())];
+            IRoom newRoom = roomTypes[random.Next(0, roomTypes.Count())];
 
             if (pickedDirection == "North")
+            {
                 roomNorth = newRoom.roomID;
+                newRoom.roomSouth = roomID;
+            }
             if (pickedDirection == "South")
+            {
                 roomSouth = newRoom.roomID;
+                newRoom.roomNorth = roomID;
+            }
             if (pickedDirection == "East")
+            {
                 roomEast = newRoom.roomID;
+                newRoom.roomWest = roomID;
+            }
             if (pickedDirection == "West")
+            {
                 roomWest = newRoom.roomID;
+                newRoom.roomEast = roomID;
+            }
             
             return newRoom; 
 

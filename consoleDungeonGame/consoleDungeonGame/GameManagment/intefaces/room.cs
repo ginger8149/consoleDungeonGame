@@ -13,16 +13,16 @@ namespace consoleDungeonGame.GameManagment.intefaces
         string roomName {  get; }
 
 
-        int roomPosX { get; }
-        int roomPosY { get; }
+        public int roomPosX { get; }
+        public int roomPosY { get; }
 
         // id 0 to be used if not conected
-        Guid? roomNorth { get; }
-        Guid? roomSouth { get; }
-        Guid? roomEast { get; }
-        Guid? roomWest { get; }
+        public Guid? roomNorth { get; set; }
+        public Guid? roomSouth { get; set; }
+        public Guid? roomEast { get; set; }
+        public Guid? roomWest { get; set; }
 
-
+        public IRoom genNewAtachedRoom(bool ExitRoom, List<IRoom> currentMap);
         //TODO: add requred render information
 
 

@@ -20,14 +20,21 @@ namespace consoleDungeonGame.GameManagment
 
         public void saveDungeonToDisk() { }
 
-        public dungeon generateNewDungeon(int difficulty)
+        public Dungeon generateNewDungeon(int difficulty)
         {
 
             Random rand = new Random();
             int RoomsToExit = rand.Next(3,6) * difficulty;
 
 
-            List<IRoom> rooms = new List<IRoom>();
+            List<IRoom> rooms = [new basicRoom(0, 0)];
+
+            for (int i = 0; i < RoomsToExit; i++)
+            {
+                rooms.Add(rooms.Last().genNewAtachedRoom(false,rooms));
+            }
+
+
 
 
 
@@ -39,7 +46,7 @@ namespace consoleDungeonGame.GameManagment
 
             
 
-            return new dungeon();
+            return new Dungeon();
         }
 
     }

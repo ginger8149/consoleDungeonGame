@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace consoleDungeonGame.GameManagment.models
 {
-    internal class dungeon
+    internal class Dungeon
     {
 
 
